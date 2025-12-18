@@ -25,7 +25,8 @@ public class BookingServicesImpl implements BookingService {
     private final RestTemplate restTemplate;
 
     //url of locaition servide
-    private static  final String LOCATION_SERVICE = "http://localhost:8082";
+    private static final String LOCATION_SERVICE = "http://localhost:8082";
+
 
     public BookingServicesImpl(PassengerRepository passengerRepository, BookingRepository bookingRepository) {
         this.passengerRepository = passengerRepository;
@@ -41,7 +42,7 @@ public class BookingServicesImpl implements BookingService {
 
 
         Booking booking = Booking.builder()
-                .bookingStatus(BookingStatus.ASSINGING_DRIVER)
+                .bookingStatus(BookingStatus.ASSIGNING_DRIVER)
                 .startLocation(bookingDetails.getStartLocation())
                 .endLocation(bookingDetails.getEndLocation())
                 .build();
@@ -72,7 +73,7 @@ public class BookingServicesImpl implements BookingService {
         return  CreateBookingResponseDTO.builder()
                 .bookingID(newBooking.getId())
                 .bookingStatus(newBooking.getBookingStatus().toString())
-                .drive(Optional.of(newBooking.getDriver()))
+//                .drive(Optional.of(newBooking.getDriver()))
                 .build();
     }
 }

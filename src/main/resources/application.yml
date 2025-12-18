@@ -12,19 +12,19 @@
 #
 #server.port = 8082
 
+server:
+  port: 8089
+
 spring:
   application:
-    name:Booking_Services
+    name: Booking_Services
 
   datasource:
     url: jdbc:mysql://localhost:3306/Uber_DB_Local_PP
     username: root
     password: admin
 
-
-
   jpa:
-     show-sql: true
-     hibernate:
-       ddl-auto: validate
-  port: 8080
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
