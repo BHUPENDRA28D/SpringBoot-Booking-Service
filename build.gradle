@@ -6,7 +6,6 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-description = 'booking of uber '
 
 java {
 	toolchain {
@@ -14,31 +13,37 @@ java {
 	}
 }
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-
 repositories {
 	mavenCentral()
 	mavenLocal()
-
+}
+ext {
+	set('springCloudVersion', "2025.1.0")
+}
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+
+
+
 	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-websocket-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+	implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+	implementation 'com.google.code.gson:gson:2.10.1'
 
 	implementation 'com.example:SpringBootEntityService:0.0.9-SNAPSHOT'
 }
@@ -46,3 +51,28 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+//dependencies {
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+//	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+//	compileOnly 'org.projectlombok:lombok'
+//	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+//	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+//	annotationProcessor 'org.projectlombok:lombok'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-websocket-test'
+//	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+//
+//	implementation 'com.example:SpringBootEntityService:0.0.9-SNAPSHOT'
+//	implementation 'org.springframework.boot:spring-boot-starter'
+////	implementation 'org.springframework.boot:spring-boot-log4j2'
+//
+////	implementation 'org.springframework.cloud:spring-cloud-square-retrofit:0.4.1'
+////	implementation 'org.springframework.cloud:spring-cloud-square-okhttp:0.4.1'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+//
+//}
