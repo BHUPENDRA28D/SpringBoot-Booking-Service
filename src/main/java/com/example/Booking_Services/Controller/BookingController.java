@@ -3,14 +3,12 @@ package com.example.Booking_Services.Controller;
 
 import com.example.Booking_Services.DTO.CreateBookingDTO;
 import com.example.Booking_Services.DTO.CreateBookingResponseDTO;
+import com.example.Booking_Services.DTO.UpdateBookingResponseDTO;
+import com.example.Booking_Services.DTO.UpdateBookingRequestDTO;
 import com.example.Booking_Services.Services.BookingService;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/booking")
@@ -28,4 +26,13 @@ public class BookingController {
 
         return  new ResponseEntity<>(bookingService.createBooking(createBookingDTO), HttpStatus.CREATED);
     }
+
+
+
+    @PostMapping("/{bookingId}")
+    public ResponseEntity<UpdateBookingResponseDTO> updateBooking(@RequestBody UpdateBookingRequestDTO requestDto, @PathVariable Long bookingId) {
+        return new ResponseEntity<>(bookingService.updateBooking(requestDto, bookingId), HttpStatus.OK);
+    }
+
+
 }
