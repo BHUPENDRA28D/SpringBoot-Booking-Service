@@ -71,7 +71,7 @@ public class BookingServicesImpl implements BookingService {
                 .longitude(bookingDetails.getStartLocation().getLongitude())
                 .build();
 
-        proceesNearByDriverAsyn(requestDTO,bookingDetails.getPassengerId());
+        proceesNearByDriverAsyn(requestDTO,bookingDetails.getPassengerId(),newBooking.getId());
 
 /*        ResponseEntity<DriverLocationDTO[]> result = restTemplate.postForEntity(LOCATION_SERVICE + "/api/location/nearby/drivers", requestDTO, DriverLocationDTO[].class);
 
@@ -97,7 +97,7 @@ public class BookingServicesImpl implements BookingService {
 
 
 
-    private void proceesNearByDriverAsyn(NearbyDriverRequestDTO requestDTO,Long passengerId) {
+    private void proceesNearByDriverAsyn(NearbyDriverRequestDTO requestDTO,Long passengerId, Long bookingId) {
 
         Call<List<DriverLocationDTO>> call =
                 locationServiceAPI.getNearByDrivers(requestDTO);
@@ -127,7 +127,7 @@ public class BookingServicesImpl implements BookingService {
                         );
                     });
 
-                    rasiaseRideRequestAsync(RideRequestDTO.builder().passengerId(passengerId).build());
+                    rasieRideRequestAsync(RideRequestDTO.builder().passengerId(passengerId).bookingId(bookingId).build());
                 } else {
                     log.error("Request for ride failed: {}", response.message());
                 }
@@ -149,7 +149,7 @@ public class BookingServicesImpl implements BookingService {
   =========================================================================
 */
 
-    private void rasiaseRideRequestAsync(RideRequestDTO requestDTO){
+    private void rasieRideRequestAsync(RideRequestDTO requestDTO){
 
         Call<Boolean> call = uberSocketAPI.getNearByDrivers(requestDTO);
 
@@ -158,7 +158,9 @@ public class BookingServicesImpl implements BookingService {
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.isSuccessful()) {
+                System.out.println(response.isSuccessful());
+                System.out.println(response.message());
+                if (response.isSuccessful() && response.body()!=null) {
                     Boolean result = response.body();
                     log.info("Driver response is : {}", result);
                 } else {

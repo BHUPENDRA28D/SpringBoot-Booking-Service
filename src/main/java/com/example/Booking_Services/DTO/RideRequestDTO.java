@@ -19,4 +19,5 @@ public class RideRequestDTO {
     private ExactLocation endLocation;*/
 
     private List<Long> driverIds;
+    private Long bookingId;
 }
